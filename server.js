@@ -2,9 +2,8 @@
 
 const express = require("express");
 const mongoose = require("mongoose");
-const session = require("express-session");
 const cors = require("cors");
-
+const path = require("path");
 
 const swaggerUi = require("swagger-ui-express");
 const swaggerJsdoc = require("swagger-jsdoc");
@@ -26,14 +25,6 @@ app.use(cors({
 
 app.use(express.json());
 
-app.use(
-    session({
-        secret: "secretkey",
-        resave: false,
-        saveUninitialized: false,
-    })
-);
-
 // ===================================
 // SWAGGER CONFIG
 // ===================================
@@ -42,7 +33,7 @@ const options = {
     definition: {
         openapi: "3.0.0",
         info: {
-            title: "Auth API",
+            title: "API",
             version: "1.0.0",
         },
     },
@@ -51,9 +42,14 @@ const options = {
 
 const swaggerSpec = swaggerJsdoc(options);
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpec)
+);
+
 // ===================================
-// MONGODB CLOUD CONNECTION
+// MONGODB
 // ===================================
 
 mongoose
@@ -83,7 +79,10 @@ const User = mongoose.model("User", userSchema);
 // ===================================
 
 function isLoggedIn(req, res, next) {
-    if (!req.session.user) {
+
+    const token = req.headers.authorization;
+
+    if (token !== "Bearer mytoken") {
         return res.status(401).json({
             message: "Unauthorized",
         });
@@ -99,84 +98,33 @@ function isLoggedIn(req, res, next) {
  *     summary: Login User
  *     tags:
  *       - Auth
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             properties:
- *               username:
- *                 type: string
- *               password:
- *                 type: string
  *     responses:
  *       200:
  *         description: Login successful
  */
 
 // ===================================
-// LOGIN API
+// LOGIN
 // ===================================
 
 app.post("/login", async(req, res) => {
-    try {
-        const { username, password } = req.body;
 
-        const user = await User.findOne({
-            username,
-            password,
-        });
+    const { username, password } = req.body;
 
-        if (!user) {
-            return res.status(401).json({
-                message: "Invalid username or password",
-            });
-        }
+    const user = await User.findOne({
+        username,
+        password,
+    });
 
-        req.session.user = {
-            id: user._id,
-            username: user.username,
-        };
-
-        res.json({
-            message: "Login Successful",
-            user: req.session.user,
-        });
-    } catch (err) {
-        res.status(500).json({
-            message: "Server Error",
+    if (!user) {
+        return res.status(401).json({
+            message: "Invalid credentials",
         });
     }
-});
 
-/**
- * @swagger
- * /logout:
- *   post:
- *     summary: Logout User
- *     tags:
- *       - Auth
- *     responses:
- *       200:
- *         description: Logout successful
- */
-
-// ===================================
-// LOGOUT API
-// ===================================
-
-app.post("/logout", (req, res) => {
-    req.session.destroy((err) => {
-        if (err) {
-            return res.status(500).json({
-                message: "Logout Failed",
-            });
-        }
-
-        res.json({
-            message: "Logout Successful",
-        });
+    res.json({
+        message: "Login Successful",
+        token: "mytoken",
     });
 });
 
@@ -184,20 +132,21 @@ app.post("/logout", (req, res) => {
  * @swagger
  * /products:
  *   get:
- *     summary: Get Protected Products
+ *     summary: Protected Products
  *     tags:
  *       - Products
  *     responses:
  *       200:
- *         description: Protected products data
+ *         description: Success
  */
 
 // ===================================
-// PROTECTED PRODUCTS ROUTE
+// PRODUCTS
 // ===================================
 
 app.get("/products", isLoggedIn, (req, res) => {
-    const products = [{
+
+    res.json([{
             id: 1,
             name: "iPhone 15",
             price: 80000,
@@ -207,18 +156,7 @@ app.get("/products", isLoggedIn, (req, res) => {
             name: "Samsung S24",
             price: 70000,
         },
-        {
-            id: 3,
-            name: "MacBook Air",
-            price: 120000,
-        },
-    ];
-
-    res.json({
-        message: "Protected Products Data",
-        loggedInUser: req.session.user,
-        products,
-    });
+    ]);
 });
 
 /**
@@ -230,44 +168,45 @@ app.get("/products", isLoggedIn, (req, res) => {
  *       - User
  *     responses:
  *       200:
- *         description: Demo user created
+ *         description: User created
  */
 
 // ===================================
-// CREATE DEMO USER
+// CREATE USER
 // ===================================
 
 app.get("/create-user", async(req, res) => {
-    try {
-        const existingUser = await User.findOne({
-            username: "admin",
-        });
 
-        if (existingUser) {
-            return res.json({
-                message: "User already exists",
-            });
-        }
+    const existingUser = await User.findOne({
+        username: "admin",
+    });
 
-        const user = await User.create({
-            username: "admin",
-            password: "1234",
+    if (existingUser) {
+        return res.json({
+            message: "User already exists",
         });
-
-        res.json({
-            message: "User created",
-            user,
-        });
-    } catch (err) {
-        res.status(500).json(err);
     }
+
+    const user = await User.create({
+        username: "admin",
+        password: "1234",
+    });
+
+    res.json(user);
 });
 
 // ===================================
-// SERVER
+// HOME
 // ===================================
 
-const PORT = 3000;
+app.get("/", (req, res) => {
+    res.json({
+        message: "API Running",
+    });
+});
 
-// app.listen(3000);
+// ===================================
+// EXPORT
+// ===================================
+
 module.exports = app;
