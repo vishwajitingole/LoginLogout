@@ -4,11 +4,22 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Auth API Docs</title>
-
+    <title>AuthAPI | Interactive Docs</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <style>
+         :root {
+            --primary: #00d4ff;
+            --secondary: #007bff;
+            --bg: #050816;
+            --card-bg: rgba(255, 255, 255, 0.04);
+            --border: rgba(255, 255, 255, 0.1);
+            --text-main: #ffffff;
+            --text-dim: #b8c1d1;
+            --success: #28c840;
+            --error: #ff5f57;
+        }
+        
         * {
             margin: 0;
             padding: 0;
@@ -16,608 +27,351 @@
             font-family: "Poppins", sans-serif;
         }
         
-        html {
-            scroll-behavior: smooth;
-        }
-        
         body {
-            background: #050816;
-            color: white;
+            background: var(--bg);
+            color: var(--text-main);
             overflow-x: hidden;
-            min-height: 100vh;
-            position: relative;
+            line-height: 1.6;
         }
+        /* Background Grid */
         
         body::before {
             content: "";
             position: fixed;
             inset: 0;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
             background-size: 40px 40px;
-            z-index: -2;
-        }
-        
-        .glow {
-            position: absolute;
-            width: 450px;
-            height: 450px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 212, 255, 0.18), transparent 70%);
-            filter: blur(70px);
             z-index: -1;
-            animation: float 8s ease-in-out infinite alternate;
-        }
-        
-        .glow2 {
-            right: 0;
-            top: 40%;
-            background: radial-gradient(circle, rgba(0, 120, 255, 0.18), transparent 70%);
-        }
-        
-        @keyframes float {
-            from {
-                transform: translateY(-20px);
-            }
-            to {
-                transform: translateY(20px);
-            }
         }
         
         .navbar {
-            width: 100%;
-            padding: 22px 8%;
+            padding: 20px 8%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(12px);
+            background: rgba(5, 8, 22, 0.8);
             position: sticky;
             top: 0;
-            z-index: 100;
-            backdrop-filter: blur(12px);
-            background: rgba(5, 8, 22, 0.7);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
         }
         
         .logo {
-            font-size: 30px;
+            font-size: 24px;
             font-weight: 700;
-            color: #00d4ff;
+            color: var(--primary);
+            letter-spacing: 1px;
         }
         
-        .hero {
-            min-height: 100vh;
-            width: 100%;
-            padding: 80px 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 60px;
-            flex-wrap: wrap;
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
         }
+        /* Configuration Header */
         
-        .hero-left {
-            flex: 1;
-            min-width: 320px;
-        }
-        
-        .tag {
-            display: inline-block;
-            padding: 10px 18px;
-            border-radius: 999px;
-            background: rgba(0, 212, 255, 0.1);
-            border: 1px solid rgba(0, 212, 255, 0.3);
-            color: #00d4ff;
-            margin-bottom: 24px;
-        }
-        
-        .hero h1 {
-            font-size: 68px;
-            line-height: 1.1;
-            margin-bottom: 24px;
-        }
-        
-        .hero h1 span {
-            color: #00d4ff;
-        }
-        
-        .hero p {
-            color: #b8c1d1;
-            line-height: 1.8;
-            font-size: 18px;
-            max-width: 700px;
-        }
-        
-        .btn-group {
-            margin-top: 40px;
+        .config-bar {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+            margin-bottom: 40px;
             display: flex;
             gap: 20px;
             flex-wrap: wrap;
+            align-items: flex-end;
         }
         
-        .btn {
-            padding: 16px 30px;
-            border-radius: 14px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: 0.3s;
-        }
-        
-        .primary {
-            background: linear-gradient(135deg, #00d4ff, #007bff);
-            color: white;
-            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.35);
-        }
-        
-        .secondary {
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background: rgba(255, 255, 255, 0.05);
-            color: white;
-        }
-        
-        .btn:hover {
-            transform: translateY(-4px);
-        }
-        
-        .hero-right {
+        .input-group {
             flex: 1;
-            min-width: 320px;
-            display: flex;
-            justify-content: center;
+            min-width: 250px;
         }
         
-        .terminal {
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--primary);
+        }
+        
+        input {
             width: 100%;
-            max-width: 620px;
-            background: #0d1224;
-            border-radius: 22px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5);
-        }
-        
-        .terminal-header {
-            padding: 18px 20px;
-            background: #131a31;
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-        
-        .red {
-            background: #ff5f57;
-        }
-        
-        .yellow {
-            background: #febc2e;
-        }
-        
-        .green {
-            background: #28c840;
-        }
-        
-        .terminal-body {
-            padding: 30px;
-            font-family: monospace;
-            color: #7df9ff;
-            line-height: 2;
-        }
-        
-        .section {
-            padding: 100px 8%;
-        }
-        
-        .section-title {
-            font-size: 46px;
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 30px;
-        }
-        
-        .card {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 30px;
-            backdrop-filter: blur(12px);
+            padding: 12px 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: white;
+            font-family: 'Fira Code', monospace;
+            outline: none;
             transition: 0.3s;
         }
         
-        .card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(0, 212, 255, 0.35);
-            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.12);
+        input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+        }
+        /* API Cards */
+        
+        .api-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            border: 1px solid var(--border);
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+        
+        .api-header {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
         }
         
         .method {
-            display: inline-block;
-            padding: 8px 14px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 700;
-            margin-bottom: 20px;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 12px;
         }
         
         .post {
-            background: rgba(0, 150, 255, 0.12);
-            color: #00d4ff;
+            background: rgba(0, 212, 255, 0.2);
+            color: var(--primary);
         }
         
         .get {
-            background: rgba(0, 255, 150, 0.12);
-            color: #00ff95;
+            background: rgba(40, 200, 64, 0.2);
+            color: var(--success);
         }
         
-        .endpoint {
-            font-size: 26px;
-            margin-bottom: 20px;
-            font-weight: 700;
+        .path {
+            font-family: 'Fira Code', monospace;
+            font-weight: 500;
         }
         
-        .desc {
-            color: #b8c1d1;
-            line-height: 1.8;
+        .api-content {
+            padding: 25px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        
+        @media (max-width: 900px) {
+            .api-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        /* Interactive Area */
+        
+        .try-it-out {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .btn-execute {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        
+        .btn-execute:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+        
+        .response-area {
+            background: #0d1224;
+            border-radius: 10px;
+            padding: 15px;
+            min-height: 100px;
+            font-family: 'Fira Code', monospace;
+            font-size: 13px;
+            white-space: pre-wrap;
+            border: 1px solid var(--border);
+            color: #7df9ff;
+            position: relative;
+        }
+        
+        .status-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        
+        .desc-text {
+            color: var(--text-dim);
+            margin-bottom: 15px;
+        }
+        
+        h4 {
+            margin-bottom: 10px;
+            font-size: 15px;
+            color: var(--primary);
         }
         
         pre {
-            background: #0b1020;
-            padding: 18px;
-            border-radius: 14px;
-            overflow-x: auto;
-            margin-top: 14px;
-            margin-bottom: 14px;
-            color: #7df9ff;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        
-        .base-url {
-            background: #0b1020;
-            padding: 20px;
-            border-radius: 16px;
-            text-align: center;
-            font-size: 20px;
-            color: #00d4ff;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        
-        footer {
-            padding: 40px;
-            text-align: center;
-            color: #7f8aa3;
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-        }
-        
-        @media(max-width: 768px) {
-            .hero h1 {
-                font-size: 44px;
-            }
-            .section-title {
-                font-size: 34px;
-            }
+            background: rgba(0, 0, 0, 0.2);
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 13px;
         }
     </style>
 </head>
 
 <body>
 
-    <div class="glow"></div>
-    <div class="glow glow2"></div>
-
     <nav class="navbar">
-        <div class="logo">AuthAPI</div>
+        <div class="logo">AuthAPI Explorer</div>
     </nav>
 
-    <section class="hero">
-
-        <div class="hero-left">
-
-            <div class="tag">
-                ⚡ Modern REST API Documentation
+    <div class="container">
+        <!-- Configuration -->
+        <div class="config-bar">
+            <div class="input-group">
+                <label>Base URL</label>
+                <input type="text" id="baseUrl" value="http://localhost:5000" placeholder="https://api.yoursite.com">
             </div>
-
-            <h1>
-                Secure & Fast <span>Authentication API</span>
-            </h1>
-
-            <p>
-                Developer-friendly REST API with authentication, protected routes, MongoDB integration and frontend-ready architecture. Designed for fast frontend integration and scalable backend workflows.
-            </p>
-
-            <div class="btn-group">
-                <a href="#docs" class="btn primary">Explore APIs</a>
-                <a href="#flow" class="btn secondary">Frontend Flow</a>
+            <div class="input-group">
+                <label>Bearer Token (Global)</label>
+                <input type="text" id="globalToken" placeholder="Enter token after login...">
             </div>
-
         </div>
 
-        <div class="hero-right">
-
-            <div class="terminal">
-
-                <div class="terminal-header">
-                    <div class="dot red"></div>
-                    <div class="dot yellow"></div>
-                    <div class="dot green"></div>
-                </div>
-
-                <div class="terminal-body">
-                    <div>> POST /login</div>
-                    <div>> GET /products</div>
-                    <div>> GET /create-user</div>
-                    <div>> Authorization: Bearer mytoken</div>
-                    <div>> MongoDB Atlas Connected ✔</div>
-                    <div>> Vercel Deployment Ready 🚀</div>
-                </div>
-
+        <!-- Create User -->
+        <div class="api-card">
+            <div class="api-header">
+                <span class="method get">GET</span>
+                <span class="path">/create-user</span>
             </div>
-
-        </div>
-
-    </section>
-
-    <section class="section">
-
-        <h2 class="section-title">Base URL</h2>
-
-        <div class="base-url">
-            https://your-domain.vercel.app
-        </div>
-
-    </section>
-
-    <section class="section" id="docs">
-
-        <h2 class="section-title">API Endpoints</h2>
-
-        <div class="cards">
-
-            <div class="card">
-
-                <div class="method post">POST</div>
-
-                <div class="endpoint">
-                    /login
+            <div class="api-content">
+                <div>
+                    <h4>Description</h4>
+                    <p class="desc-text">Utility endpoint to seed the database with a demo admin user.</p>
                 </div>
+                <div class="try-it-out">
+                    <button class="btn-execute" onclick="callApi('/create-user', 'GET', null, 'res-create')">Execute Request</button>
+                    <div class="response-area" id="res-create">// Response will appear here</div>
+                </div>
+            </div>
+        </div>
 
-                <div class="desc">
-
-                    <strong>Description:</strong><br> Authenticate user credentials and generate Bearer token.
-
-                    <br><br>
-
-                    <strong>Headers:</strong><br> Content-Type: application/json
-
-                    <br><br>
-
-                    <strong>Request Body:</strong>
-
-                    <pre>{
+        <!-- Login -->
+        <div class="api-card">
+            <div class="api-header">
+                <span class="method post">POST</span>
+                <span class="path">/login</span>
+            </div>
+            <div class="api-content">
+                <div>
+                    <h4>Request Body</h4>
+                    <pre id="login-payload">{
   "username": "admin",
   "password": "1234"
 }</pre>
-
-                    <strong>Success Response:</strong>
-
-                    <pre>{
-  "message": "Login Successful",
-  "token": "mytoken"
-}</pre>
-
-                    <strong>Status Codes:</strong><br> 200 → Success<br> 401 → Invalid Credentials
-
+                    <p class="desc-text" style="margin-top:10px;">Note: On success, the token will be automatically applied to the global header.</p>
                 </div>
-
+                <div class="try-it-out">
+                    <button class="btn-execute" onclick="handleLogin()">Login & Save Token</button>
+                    <div class="response-area" id="res-login">// Response will appear here</div>
+                </div>
             </div>
-
-            <div class="card">
-
-                <div class="method get">GET</div>
-
-                <div class="endpoint">
-                    /products
-                </div>
-
-                <div class="desc">
-
-                    <strong>Description:</strong><br> Protected products endpoint.
-
-                    <br><br>
-
-                    <strong>Authorization:</strong><br> Bearer Token Required
-
-                    <pre>Authorization: Bearer mytoken</pre>
-
-                    <strong>Success Response:</strong>
-
-                    <pre>[
-  {
-    "id": 1,
-    "name": "iPhone 15",
-    "price": 80000
-  },
-  {
-    "id": 2,
-    "name": "Samsung S24",
-    "price": 70000
-  }
-]</pre>
-
-                </div>
-
-            </div>
-
-            <div class="card">
-
-                <div class="method get">GET</div>
-
-                <div class="endpoint">
-                    /create-user
-                </div>
-
-                <div class="desc">
-
-                    <strong>Description:</strong><br> Creates demo admin user for testing APIs.
-
-                    <br><br>
-
-                    <strong>Demo Credentials:</strong>
-
-                    <pre>
-username: admin
-password: 1234
-</pre>
-
-                    <strong>Response:</strong>
-
-                    <pre>{
-  "message": "User created"
-}</pre>
-
-                </div>
-
-            </div>
-
         </div>
 
-    </section>
-
-    <section class="section" id="flow">
-
-        <h2 class="section-title">
-            Frontend Integration Flow
-        </h2>
-
-        <div class="cards">
-
-            <div class="card">
-
-                <div class="method post">STEP 1</div>
-
-                <div class="endpoint">
-                    Login User
-                </div>
-
-                <div class="desc">
-                    Send login credentials to <strong>/login</strong>. Save returned token inside localStorage or app state.
-                </div>
-
+        <!-- Products -->
+        <div class="api-card">
+            <div class="api-header">
+                <span class="method get">GET</span>
+                <span class="path">/products</span>
             </div>
-
-            <div class="card">
-
-                <div class="method get">STEP 2</div>
-
-                <div class="endpoint">
-                    Attach Token
+            <div class="api-content">
+                <div>
+                    <h4>Description</h4>
+                    <p class="desc-text">Returns a list of products. Requires a valid Bearer token in the Authorization header.</p>
+                    <h4>Security</h4>
+                    <p style="color: var(--success); font-size: 13px;">● Bearer Authentication</p>
                 </div>
-
-                <div class="desc">
-                    Add Bearer token inside Authorization header for all protected routes.
-
-                    <pre>Authorization: Bearer mytoken</pre>
-
+                <div class="try-it-out">
+                    <button class="btn-execute" onclick="callApi('/products', 'GET', null, 'res-products', true)">Fetch Protected Products</button>
+                    <div class="response-area" id="res-products">// Response will appear here</div>
                 </div>
-
             </div>
-
-            <div class="card">
-
-                <div class="method get">STEP 3</div>
-
-                <div class="endpoint">
-                    Fetch Products
-                </div>
-
-                <div class="desc">
-                    Access protected APIs like <strong>/products</strong> and render product data inside frontend UI.
-                </div>
-
-            </div>
-
         </div>
-
-    </section>
-
-    <section class="section">
-
-        <h2 class="section-title">Tech Stack</h2>
-
-        <div class="cards">
-
-            <div class="card">
-                <div class="endpoint">Express.js</div>
-
-                <div class="desc">
-                    Handles REST APIs, routing and middleware logic.
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="endpoint">MongoDB Atlas</div>
-
-                <div class="desc">
-                    Cloud database used for storing authentication data.
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="endpoint">Vercel</div>
-
-                <div class="desc">
-                    Serverless deployment platform for hosting APIs globally.
-                </div>
-            </div>
-
-        </div>
-
-    </section>
-
-    <footer>
-        Built with Express.js • MongoDB • GSAP • REST APIs
-    </footer>
+    </div>
 
     <script>
-        gsap.from(".navbar", {
-            y: -80,
-            opacity: 0,
-            duration: 1,
-            ease: "power3.out"
-        });
+        async function callApi(endpoint, method, body, displayId, isProtected = false) {
+            const baseUrl = document.getElementById('baseUrl').value.replace(/\/$/, "");
+            const token = document.getElementById('globalToken').value;
+            const display = document.getElementById(displayId);
 
-        gsap.from(".hero-left > *", {
-            y: 40,
-            opacity: 0,
-            duration: 1,
-            stagger: 0.15,
-            ease: "power3.out"
-        });
+            display.innerHTML = "Loading...";
 
-        gsap.from(".terminal", {
-            scale: 0.8,
-            opacity: 0,
-            duration: 1.2,
-            ease: "elastic.out(1,0.6)"
-        });
+            const headers = {
+                'Content-Type': 'application/json'
+            };
+            if (isProtected && token) {
+                headers['Authorization'] = `Bearer ${token}`;
+            }
 
-        gsap.from(".card", {
-            y: 60,
+            try {
+                const response = await fetch(`${baseUrl}${endpoint}`, {
+                    method: method,
+                    headers: headers,
+                    body: body ? JSON.stringify(body) : null
+                });
+
+                const data = await response.json();
+
+                display.innerHTML = `<span class="status-badge" style="background:${response.ok ? 'var(--success)' : 'var(--error)'}">Status: ${response.status}</span>`;
+                display.innerHTML += JSON.stringify(data, null, 2);
+
+                return data;
+            } catch (err) {
+                display.innerHTML = `<span class="status-badge" style="background:var(--error)">Error</span>${err.message}`;
+            }
+        }
+
+        async function handleLogin() {
+            const payload = {
+                username: "admin",
+                password: "1234"
+            };
+            const data = await callApi('/login', 'POST', payload, 'res-login');
+
+            if (data && data.token) {
+                document.getElementById('globalToken').value = data.token;
+                gsap.to("#globalToken", {
+                    scale: 1.05,
+                    duration: 0.2,
+                    yoyo: true,
+                    repeat: 1,
+                    bordercolor: "#00d4ff"
+                });
+            }
+        }
+
+        // Animation
+        gsap.from(".api-card", {
             opacity: 0,
-            duration: 1,
+            y: 30,
+            duration: 0.8,
             stagger: 0.2,
-            ease: "power3.out"
+            ease: "power2.out"
         });
     </script>
-
 </body>
 
 </html>
