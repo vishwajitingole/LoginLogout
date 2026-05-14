@@ -58,7 +58,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 mongoose
     .connect(
-        "mongodb+srv://invishwn:<db_password>@cluster0.kmytaq4.mongodb.net/?appName=Cluster0"
+        "mongodb+srv://invishwn:invishwn@cluster0.kmytaq4.mongodb.net/?appName=Cluster0"
     )
     .then(() => {
         console.log("MongoDB Connected");
