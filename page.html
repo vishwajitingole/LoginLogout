@@ -2,376 +2,320 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AuthAPI | Interactive Docs</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation | Auth System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
          :root {
-            --primary: #00d4ff;
-            --secondary: #007bff;
-            --bg: #050816;
-            --card-bg: rgba(255, 255, 255, 0.04);
-            --border: rgba(255, 255, 255, 0.1);
-            --text-main: #ffffff;
-            --text-dim: #b8c1d1;
-            --success: #28c840;
-            --error: #ff5f57;
+            --bg: #ffffff;
+            --sidebar: #f8fafc;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --primary: #2563eb;
+            --border: #e2e8f0;
+            --code-bg: #1e1e1e;
+            --get: #10b981;
+            --post: #3b82f6;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: "Poppins", sans-serif;
         }
         
         body {
+            font-family: 'Inter', sans-serif;
             background: var(--bg);
             color: var(--text-main);
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-        /* Background Grid */
-        
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: -1;
-        }
-        
-        .navbar {
-            padding: 20px 8%;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(12px);
-            background: rgba(5, 8, 22, 0.8);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid var(--border);
+        }
+        /* Sidebar Navigation */
+        
+        .sidebar {
+            width: 300px;
+            height: 100vh;
+            background: var(--sidebar);
+            border-right: 1px solid var(--border);
+            position: fixed;
+            padding: 2rem 1.5rem;
+            overflow-y: auto;
         }
         
         .logo {
-            font-size: 24px;
             font-weight: 700;
-            color: var(--primary);
-            letter-spacing: 1px;
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            color: var(--text-main);
         }
         
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 40px 20px;
-        }
-        /* Configuration Header */
-        
-        .config-bar {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 20px;
-            border: 1px solid var(--border);
-            margin-bottom: 40px;
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            align-items: flex-end;
+        .nav-section {
+            margin-bottom: 2rem;
         }
         
-        .input-group {
-            flex: 1;
-            min-width: 250px;
+        .nav-header {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
         }
         
-        .input-group label {
+        .nav-link {
             display: block;
-            margin-bottom: 8px;
-            font-size: 14px;
+            padding: 0.5rem 0;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        
+        .nav-link:hover {
             color: var(--primary);
         }
+        /* Main Content */
         
-        input {
+        .content {
+            margin-left: 300px;
+            padding: 4rem 10%;
             width: 100%;
-            padding: 12px 16px;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: white;
-            font-family: 'Fira Code', monospace;
-            outline: none;
-            transition: 0.3s;
+            max-width: 1200px;
         }
         
-        input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
-        }
-        /* API Cards */
-        
-        .api-card {
-            background: var(--card-bg);
-            border-radius: 18px;
-            border: 1px solid var(--border);
-            margin-bottom: 30px;
-            overflow: hidden;
-            transition: 0.3s;
+        section {
+            margin-bottom: 6rem;
+            scroll-margin-top: 4rem;
         }
         
-        .api-header {
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.02);
+        h1 {
+            font-size: 2.25rem;
+            margin-bottom: 1rem;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 0.5rem;
+        }
+        
+        p {
+            line-height: 1.6;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+        /* API Endpoint Layout */
+        
+        .endpoint-header {
             display: flex;
             align-items: center;
-            gap: 15px;
-            cursor: pointer;
+            gap: 1rem;
+            margin-bottom: 1rem;
         }
         
-        .method {
-            padding: 6px 12px;
+        .badge {
+            padding: 4px 12px;
             border-radius: 6px;
-            font-weight: 800;
-            font-size: 12px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: white;
         }
         
-        .post {
-            background: rgba(0, 212, 255, 0.2);
-            color: var(--primary);
+        .badge.get {
+            background: var(--get);
         }
         
-        .get {
-            background: rgba(40, 200, 64, 0.2);
-            color: var(--success);
+        .badge.post {
+            background: var(--post);
         }
         
         .path {
-            font-family: 'Fira Code', monospace;
+            font-family: 'JetBrains Mono', monospace;
             font-weight: 500;
+            font-size: 1.1rem;
+        }
+        /* Tables & Specs */
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
         }
         
-        .api-content {
-            padding: 25px;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
+        th {
+            text-align: left;
+            background: var(--sidebar);
+            color: var(--text-muted);
+            padding: 12px;
+            border: 1px solid var(--border);
+        }
+        
+        td {
+            padding: 12px;
+            border: 1px solid var(--border);
+            vertical-align: top;
+        }
+        
+        .type {
+            color: #d946ef;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+        }
+        /* Code Blocks */
+        
+        .code-container {
+            background: var(--code-bg);
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        
+        .token-key {
+            color: #9cdcfe;
+        }
+        
+        .token-string {
+            color: #ce9178;
         }
         
         @media (max-width: 900px) {
-            .api-content {
-                grid-template-columns: 1fr;
+            .sidebar {
+                display: none;
             }
-        }
-        /* Interactive Area */
-        
-        .try-it-out {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        
-        .btn-execute {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        
-        .btn-execute:hover {
-            transform: translateY(-2px);
-            opacity: 0.9;
-        }
-        
-        .response-area {
-            background: #0d1224;
-            border-radius: 10px;
-            padding: 15px;
-            min-height: 100px;
-            font-family: 'Fira Code', monospace;
-            font-size: 13px;
-            white-space: pre-wrap;
-            border: 1px solid var(--border);
-            color: #7df9ff;
-            position: relative;
-        }
-        
-        .status-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            font-size: 11px;
-            padding: 2px 8px;
-            border-radius: 4px;
-        }
-        
-        .desc-text {
-            color: var(--text-dim);
-            margin-bottom: 15px;
-        }
-        
-        h4 {
-            margin-bottom: 10px;
-            font-size: 15px;
-            color: var(--primary);
-        }
-        
-        pre {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 10px;
-            border-radius: 6px;
-            font-size: 13px;
+            .content {
+                margin-left: 0;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <nav class="navbar">
-        <div class="logo">AuthAPI Explorer</div>
-    </nav>
+    <aside class="sidebar">
+        <div class="logo">AuthAPI Reference</div>
 
-    <div class="container">
-        <!-- Configuration -->
-        <div class="config-bar">
-            <div class="input-group">
-                <label>Base URL</label>
-                <input type="text" id="baseUrl" value="http://localhost:5000" placeholder="https://api.yoursite.com">
-            </div>
-            <div class="input-group">
-                <label>Bearer Token (Global)</label>
-                <input type="text" id="globalToken" placeholder="Enter token after login...">
-            </div>
+        <div class="nav-section">
+            <div class="nav-header">Introduction</div>
+            <a href="#overview" class="nav-link">Overview</a>
+            <a href="#auth" class="nav-link">Authentication</a>
         </div>
 
-        <!-- Create User -->
-        <div class="api-card">
-            <div class="api-header">
-                <span class="method get">GET</span>
+        <div class="nav-section">
+            <div class="nav-header">Endpoints</div>
+            <a href="#create-user" class="nav-link">Create Demo User</a>
+            <a href="#login" class="nav-link">User Login</a>
+            <a href="#products" class="nav-link">Get Products</a>
+        </div>
+    </aside>
+
+    <main class="content">
+        <section id="overview">
+            <h1>API Reference</h1>
+            <p>Welcome to the AuthAPI documentation. This API provides simple user management and protected product retrieval using JWT-style Bearer tokens.</p>
+
+            <h3>Base URL</h3>
+            <div class="code-container">https://login-logout-alpha.vercel.app</div>
+        </section>
+
+        <section id="auth">
+            <h2>Authentication</h2>
+            <p>All protected routes require a Bearer token to be passed in the <code>Authorization</code> header.</p>
+            <div class="code-container">
+                Authorization: Bearer mytoken
+            </div>
+        </section>
+
+        <section id="create-user">
+            <div class="endpoint-header">
+                <span class="badge get">GET</span>
                 <span class="path">/create-user</span>
             </div>
-            <div class="api-content">
-                <div>
-                    <h4>Description</h4>
-                    <p class="desc-text">Utility endpoint to seed the database with a demo admin user.</p>
-                </div>
-                <div class="try-it-out">
-                    <button class="btn-execute" onclick="callApi('/create-user', 'GET', null, 'res-create')">Execute Request</button>
-                    <div class="response-area" id="res-create">// Response will appear here</div>
-                </div>
-            </div>
-        </div>
+            <p>Utility endpoint to generate a test user in the MongoDB database.</p>
 
-        <!-- Login -->
-        <div class="api-card">
-            <div class="api-header">
-                <span class="method post">POST</span>
+            <h3>Response</h3>
+            <table>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td><span class="type">_id</span></td>
+                    <td>String</td>
+                    <td>Unique user identifier</td>
+                </tr>
+                <tr>
+                    <td><span class="type">username</span></td>
+                    <td>String</td>
+                    <td>The created username (default: "admin")</td>
+                </tr>
+                <tr>
+                    <td><span class="type">password</span></td>
+                    <td>String</td>
+                    <td>The created password (default: "1234")</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="login">
+            <div class="endpoint-header">
+                <span class="badge post">POST</span>
                 <span class="path">/login</span>
             </div>
-            <div class="api-content">
-                <div>
-                    <h4>Request Body</h4>
-                    <pre id="login-payload">{
-  "username": "admin",
-  "password": "1234"
-}</pre>
-                    <p class="desc-text" style="margin-top:10px;">Note: On success, the token will be automatically applied to the global header.</p>
-                </div>
-                <div class="try-it-out">
-                    <button class="btn-execute" onclick="handleLogin()">Login & Save Token</button>
-                    <div class="response-area" id="res-login">// Response will appear here</div>
-                </div>
-            </div>
-        </div>
+            <p>Authenticates a user and returns a static session token.</p>
 
-        <!-- Products -->
-        <div class="api-card">
-            <div class="api-header">
-                <span class="method get">GET</span>
+            <h3>Request Body</h3>
+            <div class="code-container">
+                <span class="token-key">"username"</span>: <span class="token-string">"admin"</span>,
+                <span class="token-key">"password"</span>: <span class="token-string">"1234"</span>
+            </div>
+
+            <h3>Status Codes</h3>
+            <table>
+                <tr>
+                    <td>200</td>
+                    <td>Success. Token returned.</td>
+                </tr>
+                <tr>
+                    <td>401</td>
+                    <td>Unauthorized. Invalid credentials.</td>
+                </tr>
+            </table>
+        </section>
+
+        <section id="products">
+            <div class="endpoint-header">
+                <span class="badge get">GET</span>
                 <span class="path">/products</span>
             </div>
-            <div class="api-content">
-                <div>
-                    <h4>Description</h4>
-                    <p class="desc-text">Returns a list of products. Requires a valid Bearer token in the Authorization header.</p>
-                    <h4>Security</h4>
-                    <p style="color: var(--success); font-size: 13px;">● Bearer Authentication</p>
-                </div>
-                <div class="try-it-out">
-                    <button class="btn-execute" onclick="callApi('/products', 'GET', null, 'res-products', true)">Fetch Protected Products</button>
-                    <div class="response-area" id="res-products">// Response will appear here</div>
-                </div>
+            <p>Returns an array of product objects. <strong>Requires Authentication.</strong></p>
+
+            <h3>Headers</h3>
+            <table>
+                <tr>
+                    <td>Authorization</td>
+                    <td>Bearer mytoken</td>
+                </tr>
+            </table>
+
+            <h3>Success Response</h3>
+            <div class="code-container">
+                [ {
+                <span class="token-key">"id"</span>: 1,
+                <span class="token-key">"name"</span>: <span class="token-string">"iPhone 15"</span>,
+                <span class="token-key">"price"</span>: 80000 }, ... ]
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
 
-    <script>
-        async function callApi(endpoint, method, body, displayId, isProtected = false) {
-            const baseUrl = document.getElementById('baseUrl').value.replace(/\/$/, "");
-            const token = document.getElementById('globalToken').value;
-            const display = document.getElementById(displayId);
-
-            display.innerHTML = "Loading...";
-
-            const headers = {
-                'Content-Type': 'application/json'
-            };
-            if (isProtected && token) {
-                headers['Authorization'] = `Bearer ${token}`;
-            }
-
-            try {
-                const response = await fetch(`${baseUrl}${endpoint}`, {
-                    method: method,
-                    headers: headers,
-                    body: body ? JSON.stringify(body) : null
-                });
-
-                const data = await response.json();
-
-                display.innerHTML = `<span class="status-badge" style="background:${response.ok ? 'var(--success)' : 'var(--error)'}">Status: ${response.status}</span>`;
-                display.innerHTML += JSON.stringify(data, null, 2);
-
-                return data;
-            } catch (err) {
-                display.innerHTML = `<span class="status-badge" style="background:var(--error)">Error</span>${err.message}`;
-            }
-        }
-
-        async function handleLogin() {
-            const payload = {
-                username: "admin",
-                password: "1234"
-            };
-            const data = await callApi('/login', 'POST', payload, 'res-login');
-
-            if (data && data.token) {
-                document.getElementById('globalToken').value = data.token;
-                gsap.to("#globalToken", {
-                    scale: 1.05,
-                    duration: 0.2,
-                    yoyo: true,
-                    repeat: 1,
-                    bordercolor: "#00d4ff"
-                });
-            }
-        }
-
-        // Animation
-        gsap.from(".api-card", {
-            opacity: 0,
-            y: 30,
-            duration: 0.8,
-            stagger: 0.2,
-            ease: "power2.out"
-        });
-    </script>
 </body>
 
 </html>
