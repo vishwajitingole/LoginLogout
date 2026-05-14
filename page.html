@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Docs</title>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+        
+        body {
+            background: #050816;
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image: linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: -2;
+        }
+        
+        .glow {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.18), transparent 70%);
+            filter: blur(50px);
+            z-index: -1;
+            animation: float 8s ease-in-out infinite alternate;
+        }
+        
+        .glow2 {
+            right: 0;
+            top: 30%;
+            background: radial-gradient(circle, rgba(0, 120, 255, 0.18), transparent 70%);
+        }
+        
+        @keyframes float {
+            from {
+                transform: translateY(-20px);
+            }
+            to {
+                transform: translateY(20px);
+            }
+        }
+        
+        .navbar {
+            width: 100%;
+            padding: 20px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(5, 8, 22, 0.75);
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #00d4ff;
+            letter-spacing: 1px;
+        }
+        
+        .hero {
+            width: 100%;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 8%;
+            gap: 60px;
+            flex-wrap: wrap;
+        }
+        
+        .hero-left {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 10px 18px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 999px;
+            color: #00d4ff;
+            margin-bottom: 24px;
+        }
+        
+        .hero h1 {
+            font-size: 64px;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+        
+        .hero h1 span {
+            color: #00d4ff;
+        }
+        
+        .hero p {
+            color: #b8c1d1;
+            line-height: 1.7;
+            font-size: 18px;
+            max-width: 650px;
+        }
+        
+        .btn-group {
+            margin-top: 40px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            padding: 16px 28px;
+            border-radius: 14px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: 0.3s;
+            text-decoration: none;
+        }
+        
+        .primary {
+            background: linear-gradient(135deg, #00d4ff, #007bff);
+            color: white;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.35);
+        }
+        
+        .secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+        
+        .hero-right {
+            flex: 1;
+            min-width: 320px;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .terminal {
+            width: 100%;
+            max-width: 620px;
+            background: #0d1224;
+            border-radius: 22px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 80px rgba(0, 0, 0, 0.5);
+        }
+        
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 18px 20px;
+            background: #131a31;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .red {
+            background: #ff5f57;
+        }
+        
+        .yellow {
+            background: #febc2e;
+        }
+        
+        .green {
+            background: #28c840;
+        }
+        
+        .terminal-body {
+            padding: 30px;
+            font-family: monospace;
+            color: #7df9ff;
+            line-height: 2;
+            font-size: 15px;
+        }
+        
+        .section {
+            padding: 80px 8%;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 42px;
+            margin-bottom: 60px;
+        }
+        
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 28px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 30px;
+            transition: 0.3s ease;
+            backdrop-filter: blur(12px);
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 212, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 212, 255, 0.12);
+        }
+        
+        .method {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .get {
+            background: rgba(0, 255, 150, 0.12);
+            color: #00ff95;
+        }
+        
+        .post {
+            background: rgba(0, 150, 255, 0.12);
+            color: #00d4ff;
+        }
+        
+        .endpoint {
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+        
+        .desc {
+            color: #b8c1d1;
+            line-height: 1.7;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #7f8aa3;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        
+        @media(max-width: 768px) {
+            .hero h1 {
+                font-size: 44px;
+            }
+            .section-title {
+                font-size: 34px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="glow"></div>
+    <div class="glow glow2"></div>
+
+    <nav class="navbar">
+        <div class="logo">AuthAPI</div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-left">
+            <div class="tag">⚡ Modern REST API Documentation</div>
+            <h1>
+                Secure & Fast <span>Authentication API</span>
+            </h1>
+            <p>
+                Developer-friendly authentication API with login, products access, protected routes, MongoDB integration and clean REST architecture. Built for modern frontend and backend workflows.
+            </p>
+
+            <div class="btn-group">
+                <a href="#docs" class="btn primary">Explore APIs</a>
+                <a href="/swagger.json" class="btn secondary">Swagger JSON</a>
+            </div>
+        </div>
+
+        <div class="hero-right">
+            <div class="terminal">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+
+                <div class="terminal-body">
+                    <div>> POST /login</div>
+                    <div>> GET /products</div>
+                    <div>> GET /create-user</div>
+                    <div>> Authorization: Bearer mytoken</div>
+                    <div>> MongoDB Connected ✔</div>
+                    <div>> Serverless Ready 🚀</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="docs">
+        <h2 class="section-title">API Endpoints</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <div class="method post">POST</div>
+                <div class="endpoint">/login</div>
+                <div class="desc">
+                    Authenticate user credentials and receive authorization token.
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="method get">GET</div>
+                <div class="endpoint">/products</div>
+                <div class="desc">
+                    Protected products endpoint requiring Bearer token authorization.
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="method get">GET</div>
+                <div class="endpoint">/create-user</div>
+                <div class="desc">
+                    Create demo admin user for testing API authentication flow.
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer>
+        Built with Express.js • MongoDB • Swagger • GSAP Animations
+    </footer>
+
+    <script>
+        gsap.from(".navbar", {
+            y: -80,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out"
+        });
+
+        gsap.from(".hero-left > *", {
+            y: 40,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.15,
+            ease: "power3.out"
+        });
+
+        gsap.from(".terminal", {
+            scale: 0.8,
+            opacity: 0,
+            duration: 1.2,
+            ease: "elastic.out(1,0.6)"
+        });
+
+        gsap.from(".card", {
+            scrollTrigger: ".cards",
+            y: 60,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.2,
+            ease: "power3.out"
+        });
+    </script>
+
+</body>
+
+</html>
