@@ -341,7 +341,13 @@
                 <div class="method post">POST</div>
                 <div class="endpoint">/login</div>
                 <div class="desc">
-                    Authenticate user credentials and receive authorization token.
+                    Authenticate users using username and password credentials. After successful login, API returns a Bearer token which must be included in protected routes.
+                    <br><br>
+                    <strong>Request Body:</strong><br> {
+                    <br> &nbsp;&nbsp;"username": "admin",<br> &nbsp;&nbsp;"password": "1234"<br> }
+                    <br><br>
+                    <strong>Success Response:</strong><br> {
+                    <br> &nbsp;&nbsp;"message": "Login Successful",<br> &nbsp;&nbsp;"token": "mytoken"<br> }
                 </div>
             </div>
 
@@ -349,7 +355,11 @@
                 <div class="method get">GET</div>
                 <div class="endpoint">/products</div>
                 <div class="desc">
-                    Protected products endpoint requiring Bearer token authorization.
+                    Protected route for frontend developers to fetch product data. Requires Authorization header.
+                    <br><br>
+                    <strong>Headers:</strong><br> Authorization: Bearer mytoken
+                    <br><br>
+                    <strong>Returns:</strong><br> Product id, product name and pricing data.
                 </div>
             </div>
 
@@ -357,7 +367,72 @@
                 <div class="method get">GET</div>
                 <div class="endpoint">/create-user</div>
                 <div class="desc">
-                    Create demo admin user for testing API authentication flow.
+                    Utility endpoint used for creating a demo admin user. Useful during testing and frontend integration.
+                    <br><br>
+                    <strong>Demo Credentials:</strong><br> username: admin<br> password: 1234
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">Frontend Integration Flow</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <div class="method post">STEP 1</div>
+                <div class="endpoint">Login User</div>
+                <div class="desc">
+                    Send username and password to <strong>/login</strong> endpoint. Store returned token inside localStorage or frontend state.
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="method get">STEP 2</div>
+                <div class="endpoint">Attach Token</div>
+                <div class="desc">
+                    Add Bearer token inside request headers for protected routes.
+                    <br><br> Example:
+                    <br> Authorization: Bearer mytoken
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="method get">STEP 3</div>
+                <div class="endpoint">Fetch Data</div>
+                <div class="desc">
+                    Access secure APIs like <strong>/products</strong> and render product data directly inside frontend applications.
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="section">
+        <h2 class="section-title">Tech Stack</h2>
+
+        <div class="cards">
+
+            <div class="card">
+                <div class="endpoint">Express.js</div>
+                <div class="desc">
+                    Handles REST API routes, middleware and request processing.
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="endpoint">MongoDB Atlas</div>
+                <div class="desc">
+                    Cloud database used for storing user authentication data.
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="endpoint">Vercel Deployment</div>
+                <div class="desc">
+                    Serverless deployment platform for hosting APIs globally.
                 </div>
             </div>
 
