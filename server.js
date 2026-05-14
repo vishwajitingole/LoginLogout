@@ -274,4 +274,5 @@ app.get("/create-user", async(req, res) => {
 
 const PORT = 3000;
 
-app.listen(3000);
+// app.listen(3000);
+module.exports = app;
