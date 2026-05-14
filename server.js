@@ -55,7 +55,7 @@ const options = {
 
 const swaggerSpec = swaggerJsdoc(options);
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // ===================================
 // MONGODB CLOUD CONNECTION
@@ -274,4 +274,4 @@ app.get("/create-user", async(req, res) => {
 
 const PORT = 3000;
 
-module.exports = app;
+app.listen(3000);
