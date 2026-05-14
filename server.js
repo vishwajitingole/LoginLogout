@@ -44,19 +44,14 @@ const options = {
         info: {
             title: "Auth API",
             version: "1.0.0",
-            description: "Login Logout API Documentation",
         },
-        servers: [{
-            url: "/",
-        }, ],
     },
-    apis: ["./server.js"],
+    apis: [path.join(__dirname, "server.js")],
 };
 
 const swaggerSpec = swaggerJsdoc(options);
 
-app.use("/", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 // ===================================
 // MONGODB CLOUD CONNECTION
 // ===================================
