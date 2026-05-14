@@ -47,7 +47,7 @@ const options = {
             description: "Login Logout API Documentation",
         },
         servers: [{
-            url: "https://login-logout-alpha.vercel.app/api-docs/",
+            url: "/",
         }, ],
     },
     apis: ["./server.js"],
