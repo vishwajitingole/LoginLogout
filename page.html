@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>API Docs</title>
+    <title>Auth API Docs</title>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 
@@ -14,6 +14,10 @@
             padding: 0;
             box-sizing: border-box;
             font-family: "Poppins", sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
         }
         
         body {
@@ -35,18 +39,18 @@
         
         .glow {
             position: absolute;
-            width: 400px;
-            height: 400px;
+            width: 450px;
+            height: 450px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 255, 255, 0.18), transparent 70%);
-            filter: blur(50px);
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.18), transparent 70%);
+            filter: blur(70px);
             z-index: -1;
             animation: float 8s ease-in-out infinite alternate;
         }
         
         .glow2 {
             right: 0;
-            top: 30%;
+            top: 40%;
             background: radial-gradient(circle, rgba(0, 120, 255, 0.18), transparent 70%);
         }
         
@@ -61,55 +65,54 @@
         
         .navbar {
             width: 100%;
-            padding: 20px 8%;
+            padding: 22px 8%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             position: sticky;
             top: 0;
-            z-index: 10;
-            background: rgba(5, 8, 22, 0.75);
+            z-index: 100;
+            backdrop-filter: blur(12px);
+            background: rgba(5, 8, 22, 0.7);
         }
         
         .logo {
-            font-size: 28px;
+            font-size: 30px;
             font-weight: 700;
             color: #00d4ff;
-            letter-spacing: 1px;
         }
         
         .hero {
+            min-height: 100vh;
             width: 100%;
-            min-height: 90vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             padding: 80px 8%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             gap: 60px;
             flex-wrap: wrap;
         }
         
         .hero-left {
             flex: 1;
-            min-width: 300px;
+            min-width: 320px;
         }
         
         .tag {
             display: inline-block;
             padding: 10px 18px;
+            border-radius: 999px;
             background: rgba(0, 212, 255, 0.1);
             border: 1px solid rgba(0, 212, 255, 0.3);
-            border-radius: 999px;
             color: #00d4ff;
             margin-bottom: 24px;
         }
         
         .hero h1 {
-            font-size: 64px;
+            font-size: 68px;
             line-height: 1.1;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
         }
         
         .hero h1 span {
@@ -118,9 +121,9 @@
         
         .hero p {
             color: #b8c1d1;
-            line-height: 1.7;
+            line-height: 1.8;
             font-size: 18px;
-            max-width: 650px;
+            max-width: 700px;
         }
         
         .btn-group {
@@ -131,14 +134,11 @@
         }
         
         .btn {
-            padding: 16px 28px;
+            padding: 16px 30px;
             border-radius: 14px;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
             font-weight: 600;
-            transition: 0.3s;
             text-decoration: none;
+            transition: 0.3s;
         }
         
         .primary {
@@ -148,13 +148,13 @@
         }
         
         .secondary {
-            background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.05);
             color: white;
         }
         
         .btn:hover {
-            transform: translateY(-3px);
+            transform: translateY(-4px);
         }
         
         .hero-right {
@@ -175,11 +175,11 @@
         }
         
         .terminal-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
             padding: 18px 20px;
             background: #131a31;
+            display: flex;
+            gap: 10px;
+            align-items: center;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         
@@ -206,23 +206,22 @@
             font-family: monospace;
             color: #7df9ff;
             line-height: 2;
-            font-size: 15px;
         }
         
         .section {
-            padding: 80px 8%;
+            padding: 100px 8%;
         }
         
         .section-title {
+            font-size: 46px;
             text-align: center;
-            font-size: 42px;
             margin-bottom: 60px;
         }
         
         .cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 28px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
         }
         
         .card {
@@ -230,13 +229,13 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 24px;
             padding: 30px;
-            transition: 0.3s ease;
             backdrop-filter: blur(12px);
+            transition: 0.3s;
         }
         
         .card:hover {
             transform: translateY(-10px);
-            border-color: rgba(0, 212, 255, 0.4);
+            border-color: rgba(0, 212, 255, 0.35);
             box-shadow: 0 20px 40px rgba(0, 212, 255, 0.12);
         }
         
@@ -249,29 +248,51 @@
             margin-bottom: 20px;
         }
         
-        .get {
-            background: rgba(0, 255, 150, 0.12);
-            color: #00ff95;
-        }
-        
         .post {
             background: rgba(0, 150, 255, 0.12);
             color: #00d4ff;
         }
         
+        .get {
+            background: rgba(0, 255, 150, 0.12);
+            color: #00ff95;
+        }
+        
         .endpoint {
-            font-size: 24px;
-            margin-bottom: 12px;
+            font-size: 26px;
+            margin-bottom: 20px;
+            font-weight: 700;
         }
         
         .desc {
             color: #b8c1d1;
-            line-height: 1.7;
+            line-height: 1.8;
+        }
+        
+        pre {
+            background: #0b1020;
+            padding: 18px;
+            border-radius: 14px;
+            overflow-x: auto;
+            margin-top: 14px;
+            margin-bottom: 14px;
+            color: #7df9ff;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .base-url {
+            background: #0b1020;
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+            font-size: 20px;
+            color: #00d4ff;
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
         
         footer {
-            text-align: center;
             padding: 40px;
+            text-align: center;
             color: #7f8aa3;
             border-top: 1px solid rgba(255, 255, 255, 0.06);
         }
@@ -297,23 +318,32 @@
     </nav>
 
     <section class="hero">
+
         <div class="hero-left">
-            <div class="tag">⚡ Modern REST API Documentation</div>
+
+            <div class="tag">
+                ⚡ Modern REST API Documentation
+            </div>
+
             <h1>
                 Secure & Fast <span>Authentication API</span>
             </h1>
+
             <p>
-                Developer-friendly authentication API with login, products access, protected routes, MongoDB integration and clean REST architecture. Built for modern frontend and backend workflows.
+                Developer-friendly REST API with authentication, protected routes, MongoDB integration and frontend-ready architecture. Designed for fast frontend integration and scalable backend workflows.
             </p>
 
             <div class="btn-group">
                 <a href="#docs" class="btn primary">Explore APIs</a>
-                <a href="/swagger.json" class="btn secondary">Swagger JSON</a>
+                <a href="#flow" class="btn secondary">Frontend Flow</a>
             </div>
+
         </div>
 
         <div class="hero-right">
+
             <div class="terminal">
+
                 <div class="terminal-header">
                     <div class="dot red"></div>
                     <div class="dot yellow"></div>
@@ -325,122 +355,235 @@
                     <div>> GET /products</div>
                     <div>> GET /create-user</div>
                     <div>> Authorization: Bearer mytoken</div>
-                    <div>> MongoDB Connected ✔</div>
-                    <div>> Serverless Ready 🚀</div>
+                    <div>> MongoDB Atlas Connected ✔</div>
+                    <div>> Vercel Deployment Ready 🚀</div>
                 </div>
+
             </div>
+
         </div>
+
+    </section>
+
+    <section class="section">
+
+        <h2 class="section-title">Base URL</h2>
+
+        <div class="base-url">
+            https://your-domain.vercel.app
+        </div>
+
     </section>
 
     <section class="section" id="docs">
+
         <h2 class="section-title">API Endpoints</h2>
 
         <div class="cards">
 
             <div class="card">
+
                 <div class="method post">POST</div>
-                <div class="endpoint">/login</div>
-                <div class="desc">
-                    Authenticate users using username and password credentials. After successful login, API returns a Bearer token which must be included in protected routes.
-                    <br><br>
-                    <strong>Request Body:</strong><br> {
-                    <br> &nbsp;&nbsp;"username": "admin",<br> &nbsp;&nbsp;"password": "1234"<br> }
-                    <br><br>
-                    <strong>Success Response:</strong><br> {
-                    <br> &nbsp;&nbsp;"message": "Login Successful",<br> &nbsp;&nbsp;"token": "mytoken"<br> }
+
+                <div class="endpoint">
+                    /login
                 </div>
+
+                <div class="desc">
+
+                    <strong>Description:</strong><br> Authenticate user credentials and generate Bearer token.
+
+                    <br><br>
+
+                    <strong>Headers:</strong><br> Content-Type: application/json
+
+                    <br><br>
+
+                    <strong>Request Body:</strong>
+
+                    <pre>{
+  "username": "admin",
+  "password": "1234"
+}</pre>
+
+                    <strong>Success Response:</strong>
+
+                    <pre>{
+  "message": "Login Successful",
+  "token": "mytoken"
+}</pre>
+
+                    <strong>Status Codes:</strong><br> 200 → Success<br> 401 → Invalid Credentials
+
+                </div>
+
             </div>
 
             <div class="card">
+
                 <div class="method get">GET</div>
-                <div class="endpoint">/products</div>
-                <div class="desc">
-                    Protected route for frontend developers to fetch product data. Requires Authorization header.
-                    <br><br>
-                    <strong>Headers:</strong><br> Authorization: Bearer mytoken
-                    <br><br>
-                    <strong>Returns:</strong><br> Product id, product name and pricing data.
+
+                <div class="endpoint">
+                    /products
                 </div>
+
+                <div class="desc">
+
+                    <strong>Description:</strong><br> Protected products endpoint.
+
+                    <br><br>
+
+                    <strong>Authorization:</strong><br> Bearer Token Required
+
+                    <pre>Authorization: Bearer mytoken</pre>
+
+                    <strong>Success Response:</strong>
+
+                    <pre>[
+  {
+    "id": 1,
+    "name": "iPhone 15",
+    "price": 80000
+  },
+  {
+    "id": 2,
+    "name": "Samsung S24",
+    "price": 70000
+  }
+]</pre>
+
+                </div>
+
             </div>
 
             <div class="card">
+
                 <div class="method get">GET</div>
-                <div class="endpoint">/create-user</div>
-                <div class="desc">
-                    Utility endpoint used for creating a demo admin user. Useful during testing and frontend integration.
-                    <br><br>
-                    <strong>Demo Credentials:</strong><br> username: admin<br> password: 1234
+
+                <div class="endpoint">
+                    /create-user
                 </div>
+
+                <div class="desc">
+
+                    <strong>Description:</strong><br> Creates demo admin user for testing APIs.
+
+                    <br><br>
+
+                    <strong>Demo Credentials:</strong>
+
+                    <pre>
+username: admin
+password: 1234
+</pre>
+
+                    <strong>Response:</strong>
+
+                    <pre>{
+  "message": "User created"
+}</pre>
+
+                </div>
+
             </div>
 
         </div>
+
     </section>
 
-    <section class="section">
-        <h2 class="section-title">Frontend Integration Flow</h2>
+    <section class="section" id="flow">
+
+        <h2 class="section-title">
+            Frontend Integration Flow
+        </h2>
 
         <div class="cards">
 
             <div class="card">
+
                 <div class="method post">STEP 1</div>
-                <div class="endpoint">Login User</div>
-                <div class="desc">
-                    Send username and password to <strong>/login</strong> endpoint. Store returned token inside localStorage or frontend state.
+
+                <div class="endpoint">
+                    Login User
                 </div>
+
+                <div class="desc">
+                    Send login credentials to <strong>/login</strong>. Save returned token inside localStorage or app state.
+                </div>
+
             </div>
 
             <div class="card">
+
                 <div class="method get">STEP 2</div>
-                <div class="endpoint">Attach Token</div>
-                <div class="desc">
-                    Add Bearer token inside request headers for protected routes.
-                    <br><br> Example:
-                    <br> Authorization: Bearer mytoken
+
+                <div class="endpoint">
+                    Attach Token
                 </div>
+
+                <div class="desc">
+                    Add Bearer token inside Authorization header for all protected routes.
+
+                    <pre>Authorization: Bearer mytoken</pre>
+
+                </div>
+
             </div>
 
             <div class="card">
+
                 <div class="method get">STEP 3</div>
-                <div class="endpoint">Fetch Data</div>
-                <div class="desc">
-                    Access secure APIs like <strong>/products</strong> and render product data directly inside frontend applications.
+
+                <div class="endpoint">
+                    Fetch Products
                 </div>
+
+                <div class="desc">
+                    Access protected APIs like <strong>/products</strong> and render product data inside frontend UI.
+                </div>
+
             </div>
 
         </div>
+
     </section>
 
     <section class="section">
+
         <h2 class="section-title">Tech Stack</h2>
 
         <div class="cards">
 
             <div class="card">
                 <div class="endpoint">Express.js</div>
+
                 <div class="desc">
-                    Handles REST API routes, middleware and request processing.
+                    Handles REST APIs, routing and middleware logic.
                 </div>
             </div>
 
             <div class="card">
                 <div class="endpoint">MongoDB Atlas</div>
+
                 <div class="desc">
-                    Cloud database used for storing user authentication data.
+                    Cloud database used for storing authentication data.
                 </div>
             </div>
 
             <div class="card">
-                <div class="endpoint">Vercel Deployment</div>
+                <div class="endpoint">Vercel</div>
+
                 <div class="desc">
                     Serverless deployment platform for hosting APIs globally.
                 </div>
             </div>
 
         </div>
+
     </section>
 
     <footer>
-        Built with Express.js • MongoDB • Swagger • GSAP Animations
+        Built with Express.js • MongoDB • GSAP • REST APIs
     </footer>
 
     <script>
@@ -467,7 +610,6 @@
         });
 
         gsap.from(".card", {
-            scrollTrigger: ".cards",
             y: 60,
             opacity: 0,
             duration: 1,
